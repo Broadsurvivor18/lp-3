@@ -1,0 +1,31 @@
+pragma solidity ^0.8.0;
+contract Student_Class
+{
+struct Student
+{
+string prn;
+uint roll_no;
+string name;
+}
+Student[] private arr;
+event log(string msg);
+// Fallback function : used when the function call does not match any of the
+functions
+receive() external payable
+{
+emit log("In fallback.");
+}
+function add_student(uint roll, string memory name, string memory prn)
+public { //memory = persist data till function execution completes
+arr.push(Student(prn, roll, name));
+emit log("New student added");
+}
+function total_students() public view returns (uint) {
+return arr.length;
+}
+function get_student(uint index) public view returns (string memory, uint,
+string memory) {
+Student memory s = arr[index];
+return (s.prn, s.roll_no, s.name);
+}
+}
